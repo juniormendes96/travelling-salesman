@@ -1,11 +1,13 @@
+import { Chromosome } from './../../models/chromosome.model';
 import { Path } from './../../models/path.model';
 import { PathService } from './../path/path.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Chromosome } from 'src/app/models/chromosome.model';
 import shuffleArray from '../../utils/shuffleArray';
+import generateRandomIndex from '../../utils/generateRandomIndex';
 
-const INITIAL_POPULATION_NUMBER = 2;
+const POPULATION_NUMBER = 2;
+const NUMBER_OF_GENERATIONS = 100;
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +16,21 @@ export class AlgorithmService {
   constructor(private pathService: PathService) {}
 
   start(): Observable<Chromosome> {
-    const paths = this.pathService.getPaths();
-    const population = this.generateInitialPopulation(paths);
+    return new Observable(observer => {
+      const paths = this.pathService.getPaths();
+      const population = this.generateInitialPopulation(paths);
+      for (let index = 0; index < NUMBER_OF_GENERATIONS; index++) {
+        const lessFit = this.selectLessFit(population);
+        this.mutate(lessFit);
+      }
 
-    return null;
+      observer.next(this.selectFittest(population));
+    });
   }
 
   private generateInitialPopulation(paths: Path[]): Chromosome[] {
     const chromosomes = [];
-    for (let index = 0; index < INITIAL_POPULATION_NUMBER; index++) {
+    for (let index = 0; index < POPULATION_NUMBER; index++) {
       chromosomes.push(this.createChromosome(paths));
     }
 
@@ -38,6 +46,36 @@ export class AlgorithmService {
       )
     );
 
+    return { cities, totalDistance: this.calculateTotalDistance(cities) };
+  }
+
+  private selectLessFit(population: Chromosome[]): Chromosome {
+    return population.reduce(
+      (lessFit, currentChromosome) =>
+        currentChromosome.totalDistance > lessFit.totalDistance ? currentChromosome : lessFit,
+      population[0]
+    );
+  }
+
+  private selectFittest(population: Chromosome[]): Chromosome {
+    return population.reduce(
+      (fittest, currentChromosome) =>
+        currentChromosome.totalDistance < fittest.totalDistance ? currentChromosome : fittest,
+      population[0]
+    );
+  }
+
+  private mutate(chromosome: Chromosome): void {
+    const randomIndexA = generateRandomIndex(chromosome.cities.length);
+    const randomIndexB = generateRandomIndex(chromosome.cities.length);
+
+    const temp = chromosome.cities[randomIndexA];
+    chromosome.cities[randomIndexA] = chromosome.cities[randomIndexB];
+    chromosome.cities[randomIndexB] = temp;
+    chromosome.totalDistance = this.calculateTotalDistance(chromosome.cities);
+  }
+
+  private calculateTotalDistance(cities: string[]): number {
     let totalDistance = 0;
     for (let index = 0; index < cities.length; index++) {
       if (index === cities.length - 1) {
@@ -47,6 +85,6 @@ export class AlgorithmService {
       }
     }
 
-    return { cities, totalDistance };
+    return totalDistance;
   }
 }
