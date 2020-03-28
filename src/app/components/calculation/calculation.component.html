@@ -1,1 +1,18 @@
-<p>calculation works!</p>
+<div class="calculation-container">
+  <nz-input-number
+    nzMin="0"
+    nzPlaceHolder="Number of generations"
+    style="margin-bottom: 10px;"
+    [(ngModel)]="numberOfGenerations"
+  ></nz-input-number>
+  <button
+    nz-button
+    nzType="primary"
+    nzSize="default"
+    style="width: 100%;"
+    [nzLoading]="isCalculating"
+    (click)="calculate()"
+  >
+    Start
+  </button>
+</div>

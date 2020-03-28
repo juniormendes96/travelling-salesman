@@ -1,5 +1,4 @@
 import { PathService } from './services/path/path.service';
-import { AlgorithmService } from './services/algorithm/algorithm.service';
 import { Component, OnInit } from '@angular/core';
 import { Path } from './models/path.model';
 
@@ -31,7 +30,7 @@ export class AppComponent implements OnInit {
 
   hasInvalidCity = false;
 
-  constructor(private algorithmService: AlgorithmService, private pathService: PathService) {}
+  constructor(private pathService: PathService) {}
 
   ngOnInit() {}
 

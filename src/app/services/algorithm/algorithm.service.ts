@@ -7,7 +7,6 @@ import shuffleArray from '../../utils/shuffleArray';
 import generateRandomIndex from '../../utils/generateRandomIndex';
 
 const POPULATION_NUMBER = 2;
-const NUMBER_OF_GENERATIONS = 100;
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +14,11 @@ const NUMBER_OF_GENERATIONS = 100;
 export class AlgorithmService {
   constructor(private pathService: PathService) {}
 
-  start(): Observable<Chromosome> {
+  start(numberOfGenerations: number): Observable<Chromosome> {
     return new Observable(observer => {
       const paths = this.pathService.getPaths();
       const population = this.generateInitialPopulation(paths);
-      for (let index = 0; index < NUMBER_OF_GENERATIONS; index++) {
+      for (let index = 0; index < numberOfGenerations; index++) {
         const lessFit = this.selectLessFit(population);
         this.mutate(lessFit);
       }
