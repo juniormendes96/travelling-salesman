@@ -15,7 +15,15 @@
     <nz-step nzTitle="Calculate" nzStatus="process"></nz-step>
   </nz-steps>
 
-  <section class="step-content">
+  <section class="step-content" *ngIf="index === 0">
     <app-city-selection [cities]="cities" (cityChange)="checkInvalidCity($event)"></app-city-selection>
+  </section>
+
+  <section class="step-content" *ngIf="index === 1">
+    <app-distances></app-distances>
+  </section>
+
+  <section class="step-content" *ngIf="index === 2">
+    <app-calculation></app-calculation>
   </section>
 </div>

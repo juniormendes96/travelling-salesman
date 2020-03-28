@@ -36,6 +36,10 @@ export class CitySelectionComponent implements OnInit {
     this.cityChange.emit(city);
   }
 
+  trackByFn(city) {
+    return city;
+  }
+
   private createNotification(description: string, title = 'Error', type = 'error') {
     this.notificationService.create(type, title, description);
   }

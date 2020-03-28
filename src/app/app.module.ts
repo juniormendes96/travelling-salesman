@@ -17,11 +17,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { CitySelectionComponent } from './components/city-selection/city-selection.component';
+import { DistancesComponent } from './components/distances/distances.component';
+import { CalculationComponent } from './components/calculation/calculation.component';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent, CitySelectionComponent],
+  declarations: [AppComponent, CitySelectionComponent, DistancesComponent, CalculationComponent],
   imports: [
     BrowserModule,
     NgZorroAntdModule,
