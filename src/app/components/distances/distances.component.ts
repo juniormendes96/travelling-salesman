@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Path } from './../../models/path.model';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-distances',
@@ -6,10 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./distances.component.scss']
 })
 export class DistancesComponent implements OnInit {
+  @Input() paths: Path[];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

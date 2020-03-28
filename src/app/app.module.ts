@@ -9,7 +9,9 @@ import {
   NzStepsModule,
   NzInputModule,
   NzButtonModule,
-  NzNotificationModule
+  NzNotificationModule,
+  NzCollapseModule,
+  NzInputNumberModule
 } from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -33,7 +35,9 @@ registerLocaleData(en);
     NzStepsModule,
     NzInputModule,
     NzButtonModule,
-    NzNotificationModule
+    NzNotificationModule,
+    NzCollapseModule,
+    NzInputNumberModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

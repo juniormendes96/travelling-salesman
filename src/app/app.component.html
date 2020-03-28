@@ -12,11 +12,11 @@
   </nz-steps>
 
   <section class="step-content" *ngIf="index === 0">
-    <app-city-selection [cities]="cities" (cityChange)="checkInvalidCity($event)"></app-city-selection>
+    <app-city-selection [cities]="cities" (cityChange)="onCityChange($event)"></app-city-selection>
   </section>
 
   <section class="step-content" *ngIf="index === 1">
-    <app-distances></app-distances>
+    <app-distances [paths]="paths"></app-distances>
   </section>
 
   <section class="step-content" *ngIf="index === 2">

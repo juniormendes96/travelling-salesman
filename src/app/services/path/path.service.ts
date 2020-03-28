@@ -26,8 +26,8 @@ export class PathService {
     return path.distance;
   }
 
-  private findPath(cityA: string, cityB: string): Path {
-    const path = this.paths.find(path => {
+  findPath(cityA: string, cityB: string, paths = this.paths): Path {
+    const path = paths.find(path => {
       return (
         (path.originCity === cityA && path.destinationCity === cityB) ||
         (path.originCity === cityB && path.destinationCity === cityA)
