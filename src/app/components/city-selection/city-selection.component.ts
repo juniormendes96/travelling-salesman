@@ -17,6 +17,7 @@ export class CitySelectionComponent implements OnInit {
   removeCity(index: number): void {
     if (this.cities.length > 3) {
       this.cities.splice(index, 1);
+      this.cityChange.emit();
     } else {
       this.createNotification('You have to select at least 3 cities.');
     }
@@ -26,14 +27,14 @@ export class CitySelectionComponent implements OnInit {
     if (this.cities.length < 10) {
       const newCity = '';
       this.cities.push(newCity);
-      this.cityChange.emit(newCity);
+      this.cityChange.emit();
     } else {
       this.createNotification('You have to select up to 10 cities.');
     }
   }
 
   onCityChange(city: string) {
-    this.cityChange.emit(city);
+    this.cityChange.emit();
   }
 
   trackByFn(city) {

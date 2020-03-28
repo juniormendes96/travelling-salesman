@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
     this.index = index;
   }
 
-  checkInvalidCity(city: string) {
-    this.hasInvalidCity = !!!city;
+  checkInvalidCity() {
+    this.hasInvalidCity = this.cities.some(city => !city);
   }
 }
