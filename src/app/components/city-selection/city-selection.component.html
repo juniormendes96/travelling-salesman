@@ -1,6 +1,6 @@
 <div class="city-selection-container">
   <div class="input-container" *ngFor="let city of cities; let index = index">
-    <input nz-input placeholder="City name" [(ngModel)]="city" />
+    <input nz-input placeholder="City name" [(ngModel)]="city" (ngModelChange)="onCityChange($event)" />
     <button nz-button nzType="danger" nzSize="default" style="margin-left: 10px" (click)="removeCity(index)">
       <i nz-icon nzType="minus"></i>
     </button>

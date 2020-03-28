@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
@@ -8,6 +8,7 @@ import { NzNotificationService } from 'ng-zorro-antd';
 })
 export class CitySelectionComponent implements OnInit {
   @Input() cities: string[];
+  @Output() cityChange = new EventEmitter();
 
   constructor(private notificationService: NzNotificationService) {}
 
@@ -23,10 +24,16 @@ export class CitySelectionComponent implements OnInit {
 
   addCity() {
     if (this.cities.length < 10) {
-      this.cities.push('');
+      const newCity = '';
+      this.cities.push(newCity);
+      this.cityChange.emit(newCity);
     } else {
       this.createNotification('You have to select up to 10 cities.');
     }
+  }
+
+  onCityChange(city: string) {
+    this.cityChange.emit(city);
   }
 
   private createNotification(description: string, title = 'Error', type = 'error') {
