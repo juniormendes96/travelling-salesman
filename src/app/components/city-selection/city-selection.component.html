@@ -1,0 +1,11 @@
+<div class="city-selection-container">
+  <div class="input-container" *ngFor="let city of cities; let index = index">
+    <input nz-input placeholder="City name" [(ngModel)]="city" />
+    <button nz-button nzType="danger" nzSize="default" style="margin-left: 10px" (click)="removeCity(index)">
+      <i nz-icon nzType="minus"></i>
+    </button>
+  </div>
+  <button nz-button nzType="primary" nzSize="default" (click)="addCity()">
+    Add city
+  </button>
+</div>

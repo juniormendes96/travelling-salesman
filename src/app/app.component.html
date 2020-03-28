@@ -1,8 +1,17 @@
-<!-- NG-ZORRO -->
-<a
-  href="https://github.com/NG-ZORRO/ng-zorro-antd"
-  target="_blank"
-  style="display: flex;align-items: center;justify-content: center;height: 100%;width: 100%;"
->
-  <img height="300" src="https://img.alicdn.com/tfs/TB1X.qJJgHqK1RjSZFgXXa7JXXa-89-131.svg" />
-</a>
+<header class="header">
+  <h1 nz-title>Travelling Salesman Problem</h1>
+  <span nz-text class="info">Computer Science - UNISUL 2020</span>
+  <span nz-text class="info">Developed by <strong>Vilmar Mendes Junior</strong></span>
+  <span nz-text class="info">Oriented by <strong>Clavison Zapelini</strong></span>
+</header>
+<div class="container">
+  <nz-steps nzType="navigation" nzSize="small" [nzCurrent]="index" (nzIndexChange)="onIndexChange($event)">
+    <nz-step nzTitle="Select the cities" nzStatus="process"> </nz-step>
+    <nz-step nzTitle="Set the distances" nzStatus="wait" [nzDisabled]="true"></nz-step>
+    <nz-step nzTitle="Calculate" nzStatus="process"></nz-step>
+  </nz-steps>
+
+  <section class="step-content">
+    <app-city-selection [cities]="cities"></app-city-selection>
+  </section>
+</div>
