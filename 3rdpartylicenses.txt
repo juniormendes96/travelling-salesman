@@ -87,6 +87,8 @@ ng-zorro-antd/drawer
 
 ng-zorro-antd/dropdown
 
+ng-zorro-antd/input-number
+
 ng-zorro-antd/message
 
 ng-zorro-antd/modal
