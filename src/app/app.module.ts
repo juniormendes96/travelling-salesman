@@ -22,11 +22,12 @@ import en from '@angular/common/locales/en';
 import { CitySelectionComponent } from './components/city-selection/city-selection.component';
 import { DistancesComponent } from './components/distances/distances.component';
 import { CalculationComponent } from './components/calculation/calculation.component';
+import { PathPipe } from './pipes/path.pipe';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent, CitySelectionComponent, DistancesComponent, CalculationComponent],
+  declarations: [AppComponent, CitySelectionComponent, DistancesComponent, CalculationComponent, PathPipe],
   imports: [
     BrowserModule,
     NgZorroAntdModule,
