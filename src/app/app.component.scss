@@ -11,6 +11,10 @@
   width: 90%;
   margin: 0 auto;
 
+  @media only screen and (min-width: 950px) {
+    width: 60%;
+  }
+
   .step-content {
     margin-top: 70px;
   }
