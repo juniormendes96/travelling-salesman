@@ -12,7 +12,8 @@ import {
   NzNotificationModule,
   NzCollapseModule,
   NzInputNumberModule,
-  NzModalModule
+  NzModalModule,
+  NzTableModule
 } from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -40,7 +41,8 @@ registerLocaleData(en);
     NzNotificationModule,
     NzCollapseModule,
     NzInputNumberModule,
-    NzModalModule
+    NzModalModule,
+    NzTableModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
