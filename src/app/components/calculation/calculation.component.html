@@ -15,4 +15,14 @@
   >
     Start
   </button>
+
+  <section style="margin-top: 20px" *ngIf="fittestChromosome">
+    <h2>Results</h2>
+    <span style="display: block"
+      >Best path: <strong>{{ fittestChromosome.cities }}</strong></span
+    >
+    <span
+      >Total distance: <strong>{{ fittestChromosome.totalDistance }}</strong></span
+    >
+  </section>
 </div>

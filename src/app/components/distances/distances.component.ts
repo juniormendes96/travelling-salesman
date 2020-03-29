@@ -1,5 +1,5 @@
 import { Path } from './../../models/path.model';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-distances',
@@ -8,8 +8,13 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DistancesComponent implements OnInit {
   @Input() paths: Path[];
+  @Output() distanceChange = new EventEmitter();
 
   constructor() {}
 
   ngOnInit() {}
+
+  onDistanceChange() {
+    this.distanceChange.emit();
+  }
 }

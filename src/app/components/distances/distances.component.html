@@ -1,4 +1,4 @@
 <p *ngFor="let path of paths" style="text-align: center">
   The distance between <strong>{{ path.originCity }}</strong> and <strong>{{ path.destinationCity }}</strong> is...
-  <nz-input-number nzMin="0" [(ngModel)]="path.distance"></nz-input-number>
+  <nz-input-number nzMin="0" [(ngModel)]="path.distance" (ngModelChange)="onDistanceChange()"></nz-input-number>
 </p>

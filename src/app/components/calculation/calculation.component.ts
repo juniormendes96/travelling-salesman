@@ -1,3 +1,4 @@
+import { Chromosome } from './../../models/chromosome.model';
 import { AlgorithmService } from './../../services/algorithm/algorithm.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Path } from 'src/app/models/path.model';
@@ -15,6 +16,7 @@ export class CalculationComponent implements OnInit {
 
   isCalculating = false;
   numberOfGenerations: number;
+  fittestChromosome: Chromosome;
 
   constructor(
     private algorithmService: AlgorithmService,
@@ -27,14 +29,15 @@ export class CalculationComponent implements OnInit {
   calculate() {
     if (!this.numberOfGenerations) {
       this.notificationService.create('error', 'Error', 'You need to enter the number of generations.');
+      return;
     }
 
     this.pathService.setPaths(this.paths);
     this.algorithmService
       .start(this.numberOfGenerations)
       .pipe(tap(() => (this.isCalculating = true)))
-      .subscribe(result => {
-        console.log(result);
+      .subscribe(fittest => {
+        this.fittestChromosome = fittest;
         this.isCalculating = false;
       });
   }

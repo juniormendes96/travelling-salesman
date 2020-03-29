@@ -33,7 +33,7 @@ export class CitySelectionComponent implements OnInit {
     }
   }
 
-  onCityChange(city: string) {
+  onCityChange() {
     this.cityChange.emit();
   }
 

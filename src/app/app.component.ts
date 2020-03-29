@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
   index = 0;
 
   hasInvalidCity = false;
+  hasInvalidDistances = false;
 
   constructor(private pathService: PathService) {}
 
@@ -41,6 +42,11 @@ export class AppComponent implements OnInit {
   onCityChange() {
     this.hasInvalidCity = this.cities.some(city => !city);
     this.buildPaths();
+    this.checkInvalidDistances();
+  }
+
+  private checkInvalidDistances() {
+    this.hasInvalidDistances = this.paths.some(path => !path.distance);
   }
 
   private buildPaths() {
