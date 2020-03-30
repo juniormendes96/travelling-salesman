@@ -6,43 +6,39 @@ import {
   NgZorroAntdModule,
   NZ_I18N,
   en_US,
-  NzStepsModule,
   NzInputModule,
   NzButtonModule,
   NzNotificationModule,
   NzCollapseModule,
   NzInputNumberModule,
   NzModalModule,
-  NzTableModule
+  NzTableModule,
+  NzTagModule
 } from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
-import { CitySelectionComponent } from './components/city-selection/city-selection.component';
-import { DistancesComponent } from './components/distances/distances.component';
-import { CalculationComponent } from './components/calculation/calculation.component';
-import { PathPipe } from './pipes/path.pipe';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent, CitySelectionComponent, DistancesComponent, CalculationComponent, PathPipe],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     NgZorroAntdModule,
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    NzStepsModule,
     NzInputModule,
     NzButtonModule,
     NzNotificationModule,
     NzCollapseModule,
     NzInputNumberModule,
     NzModalModule,
-    NzTableModule
+    NzTableModule,
+    NzTagModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

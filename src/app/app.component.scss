@@ -1,5 +1,5 @@
 .header {
-  margin: 70px auto;
+  padding: 70px;
   text-align: center;
 
   .info {
@@ -15,7 +15,29 @@
     width: 60%;
   }
 
-  .step-content {
-    margin-top: 70px;
+  .editable-tag {
+    background: rgb(255, 255, 255);
+    border-style: dashed;
+  }
+
+  .generations-input,
+  .start-btn {
+    margin: 10px 0;
+  }
+
+  .generations-input {
+    width: 180px;
+    margin-right: 10px;
+  }
+
+  .start-btn {
+    width: 300px;
+  }
+
+  @media only screen and (max-width: 550px) {
+    .generations-input,
+    .start-btn {
+      width: 100%;
+    }
   }
 }

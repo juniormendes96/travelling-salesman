@@ -4,22 +4,60 @@
   <span nz-text class="info">Developed by <strong>Vilmar Mendes Junior</strong></span>
   <span nz-text class="info">Oriented by <strong>Clavison Zapelini</strong></span>
 </header>
-<div class="container">
-  <nz-steps nzSize="small" [nzCurrent]="index" (nzIndexChange)="onIndexChange($event)">
-    <nz-step nzTitle="Select the cities"> </nz-step>
-    <nz-step nzTitle="Set the distances" [nzDisabled]="hasInvalidCity"></nz-step>
-    <nz-step nzTitle="Calculate" [nzDisabled]="hasInvalidCity || hasInvalidDistances"></nz-step>
-  </nz-steps>
+<section class="container">
+  <nz-tag *ngFor="let city of cities" nzMode="closeable" style="margin-bottom: 10px" (nzOnClose)="removeCity(city)">
+    {{ city }}
+  </nz-tag>
+  <nz-tag nzNoAnimation *ngIf="!cityInputVisible" class="editable-tag" (click)="showCityInput()">
+    <i nz-icon nzType="plus"></i> New city
+  </nz-tag>
 
-  <section class="step-content" *ngIf="index === 0">
-    <app-city-selection [cities]="cities" (cityChange)="onCityChange()"></app-city-selection>
-  </section>
+  <input
+    nz-input
+    #cityInputElement
+    *ngIf="cityInputVisible"
+    nzSize="small"
+    style="width: 78px"
+    placeholder="City name"
+    [(ngModel)]="cityInput"
+    (blur)="handleCityInputConfirm()"
+    (keydown.enter)="handleCityInputConfirm()"
+  />
 
-  <section class="step-content" *ngIf="index === 1">
-    <app-distances [paths]="paths" (distanceChange)="checkInvalidDistances()"></app-distances>
-  </section>
+  <nz-table #editRowTable nzBordered [nzData]="paths" nzSize="small" style="margin-top: 10px;">
+    <thead>
+      <tr>
+        <th>Origin city</th>
+        <th>Destination city</th>
+        <th nzWidth="15%">Distance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of editRowTable.data" class="editable-row">
+        <td>{{ data.destinationCity }}</td>
+        <td>{{ data.originCity }}</td>
+        <td>
+          <nz-input-number nzMin="0" [(ngModel)]="data.distance" (ngModelChange)="onDistanceChange()"></nz-input-number>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
 
-  <section class="step-content" *ngIf="index === 2">
-    <app-calculation [paths]="paths"></app-calculation>
-  </section>
-</div>
+  <nz-input-number
+    nzMin="0"
+    nzPlaceHolder="Number of generations"
+    class="generations-input"
+    [(ngModel)]="generationsInput"
+  ></nz-input-number>
+  <button
+    nz-button
+    nzType="primary"
+    nzSize="default"
+    class="start-btn"
+    [nzLoading]="isCalculating"
+    (click)="calculate()"
+  >
+    <i nz-icon nzType="calculator"></i>
+    Calculate
+  </button>
+</section>
