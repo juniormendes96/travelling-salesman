@@ -3,6 +3,7 @@ import { AlgorithmService } from './services/algorithm/algorithm.service';
 import { PathService } from './services/path/path.service';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Path } from './models/path.model';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -66,20 +67,23 @@ export class AppComponent {
   calculate(): void {
     if (this.isReadyToCalculate()) {
       this.pathService.setPaths(this.paths);
-      this.algorithmService.start(this.generationsInput).subscribe(fittest => {
-        const citiesResult = [...fittest.cities];
-        citiesResult.push(fittest.cities[0]);
+      this.algorithmService
+        .start(this.generationsInput)
+        .pipe(take(1))
+        .subscribe(fittest => {
+          const citiesResult = [...fittest.cities];
+          citiesResult.push(fittest.cities[0]);
 
-        this.modalService.success({
-          nzTitle: 'Results',
-          nzWidth: 750,
-          nzContent: `
+          this.modalService.success({
+            nzTitle: 'Results',
+            nzWidth: 750,
+            nzContent: `
               <p>Best path: <strong>${citiesResult.join(' -> ')}</strong></p>
               <p>Total distance: <strong>${fittest.totalDistance}</strong></p>
               <p>Number of generations: <strong>${this.generationsInput}</strong></p>
             `
+          });
         });
-      });
     }
   }
 
