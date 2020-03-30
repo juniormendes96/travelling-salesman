@@ -34,10 +34,10 @@
     </thead>
     <tbody>
       <tr *ngFor="let data of editRowTable.data" class="editable-row">
-        <td>{{ data.destinationCity }}</td>
         <td>{{ data.originCity }}</td>
+        <td>{{ data.destinationCity }}</td>
         <td>
-          <nz-input-number nzMin="0" [(ngModel)]="data.distance" (ngModelChange)="onDistanceChange()"></nz-input-number>
+          <nz-input-number nzMin="0" [(ngModel)]="data.distance"></nz-input-number>
         </td>
       </tr>
     </tbody>
@@ -49,14 +49,7 @@
     class="generations-input"
     [(ngModel)]="generationsInput"
   ></nz-input-number>
-  <button
-    nz-button
-    nzType="primary"
-    nzSize="default"
-    class="start-btn"
-    [nzLoading]="isCalculating"
-    (click)="calculate()"
-  >
+  <button nz-button nzType="primary" nzSize="default" class="start-btn" (click)="calculate()">
     <i nz-icon nzType="calculator"></i>
     Calculate
   </button>

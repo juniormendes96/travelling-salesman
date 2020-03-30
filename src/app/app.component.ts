@@ -3,7 +3,6 @@ import { AlgorithmService } from './services/algorithm/algorithm.service';
 import { PathService } from './services/path/path.service';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Path } from './models/path.model';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +11,10 @@ import { tap } from 'rxjs/operators';
 })
 export class AppComponent {
   @ViewChild('cityInputElement', { static: false }) cityInputElement: ElementRef;
+
   cityInput: string;
   generationsInput: number;
+  cityInputVisible = false;
 
   cities: string[] = ['Vancouver', 'Toronto', 'Hamilton'];
   paths: Path[] = [
@@ -34,9 +35,6 @@ export class AppComponent {
     }
   ];
 
-  cityInputVisible = false;
-  isCalculating = false;
-
   constructor(
     private pathService: PathService,
     private algorithmService: AlgorithmService,
@@ -54,70 +52,88 @@ export class AppComponent {
   handleCityInputConfirm(): void {
     if (this.cityInput && this.cities.indexOf(this.cityInput) === -1) {
       this.cities = [...this.cities, this.cityInput];
-      this.buildPaths();
+      this.addCityToPathList(this.cityInput);
     }
     this.cityInput = '';
     this.cityInputVisible = false;
   }
 
-  removeCity(city) {
+  removeCity(city: string): void {
     this.cities = this.cities.filter(c => c !== city);
-    this.buildPaths();
+    this.paths = this.paths.filter(path => path.originCity !== city && path.destinationCity !== city);
   }
 
-  calculate() {
+  calculate(): void {
+    if (this.isReadyToCalculate()) {
+      this.pathService.setPaths(this.paths);
+      this.algorithmService.start(this.generationsInput).subscribe(fittest => {
+        const citiesResult = [...fittest.cities];
+        citiesResult.push(fittest.cities[0]);
+
+        this.modalService.success({
+          nzTitle: 'Results',
+          nzWidth: 750,
+          nzContent: `
+              <p>Best path: <strong>${citiesResult.join(' -> ')}</strong></p>
+              <p>Total distance: <strong>${fittest.totalDistance}</strong></p>
+              <p>Number of generations: <strong>${this.generationsInput}</strong></p>
+            `
+        });
+      });
+    }
+  }
+
+  private isReadyToCalculate() {
     if (!this.generationsInput) {
       this.notificationService.create('error', 'Error', 'You need to enter the number of generations.');
-      return;
+      return false;
     }
 
     if (this.cities.length < 3 || this.cities.length > 10) {
       this.notificationService.create('error', 'Error', 'Please select between 3 and 10 cities.');
+      return false;
+    }
+
+    return true;
+  }
+
+  private addCityToPathList(city: string): void {
+    if (!this.paths.length && this.cities.length === 2) {
+      this.paths = [
+        {
+          originCity: this.cities[0],
+          destinationCity: this.cities[1],
+          distance: 0
+        }
+      ];
       return;
     }
 
-    this.pathService.setPaths(this.paths);
-    this.algorithmService
-      .start(this.generationsInput)
-      .pipe(tap(() => (this.isCalculating = true)))
-      .subscribe(fittest => {
-        let displayCities = [...fittest.cities];
-        displayCities.push(this.cities[0]);
-        this.modalService.success({
-          nzTitle: 'Results',
-          nzContent: `
-            <p>Best path: <strong>${displayCities.join(' -> ')}</strong></p>
-            <p>Total distance: <strong>${fittest.totalDistance}</strong></p>
-            <p>Number of generations: <strong>${this.generationsInput}</strong></p>
-          `
-        });
-        this.isCalculating = false;
-      });
-  }
+    for (const path of this.paths) {
+      const pathA = this.pathService.findPath(city, path.originCity, this.paths);
+      const pathB = this.pathService.findPath(city, path.destinationCity, this.paths);
 
-  private buildPaths() {
-    const newPaths = [];
+      if (!pathA) {
+        this.paths = [
+          ...this.paths,
+          {
+            originCity: city,
+            destinationCity: path.originCity,
+            distance: 0
+          }
+        ];
+      }
 
-    for (let i = 0; i < this.cities.length; i++) {
-      for (let j = 0; j < this.cities.length; j++) {
-        if (i === j) continue;
-
-        const pathInOldList = this.pathService.findPath(this.cities[i], this.cities[j], this.paths);
-        const pathInNewList = this.pathService.findPath(this.cities[i], this.cities[j], newPaths);
-
-        if (!pathInNewList) {
-          newPaths.push(
-            pathInOldList ||
-              ({
-                originCity: this.cities[i],
-                destinationCity: this.cities[j],
-                distance: 0
-              } as Path)
-          );
-        }
+      if (!pathB) {
+        this.paths = [
+          ...this.paths,
+          {
+            originCity: city,
+            destinationCity: path.destinationCity,
+            distance: 0
+          }
+        ];
       }
     }
-
-    this.paths = newPaths;
   }
 }
