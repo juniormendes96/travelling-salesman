@@ -1,3 +1,8 @@
+ng-zorro-antd
+MIT
+
+undefined
+
 @angular/animations
 MIT
 
@@ -79,9 +84,6 @@ MIT
 date-fns is licensed under the [MIT license](http://kossnocorp.mit-license.org).
 Read more about MIT at [TLDRLegal](https://tldrlegal.com/license/mit-license).
 
-
-ng-zorro-antd
-MIT
 
 ng-zorro-antd/button
 
@@ -349,8 +351,6 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-undefined
 
 tslib
 Apache-2.0
